@@ -1,5 +1,6 @@
 from os import link
 from selenium import webdriver
+<<<<<<< HEAD
 import selenium
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -8,6 +9,18 @@ import bs4
 import pandas as pd
 import random
 import requests
+=======
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.ui import WebDriverWait
+from webdriver_manager.chrome import ChromeDriverManager
+import pandas as pd
+import random
+import requests
+import selenium
+>>>>>>> 806a986... Blocket parser now kinda works
 import selenium.webdriver.support.ui as ui
 import time
 
@@ -33,6 +46,12 @@ class BlocketParser(WebsiteParser):
                 while continue_parsing:
                     print(f"Parsing {query_url}...")
                     driver.get(query_url)
+
+                    # This part is added to make sure the page is fully loaded before parsing it. Selenium has functions
+                    # that takes care of this in a proper way but this works "good enough" for this project.
+                    sleep_time = random.random() * 10 + 10
+                    print(f"Page opened. Will wait for {sleep_time} before parsing page...")
+                    time.sleep(sleep_time)
                     
                     # First page will have a cookie pop up that needs to be accepted 
                     self.check_and_approve_cookies(driver)
@@ -83,7 +102,11 @@ class BlocketParser(WebsiteParser):
                     if "TopInfoWrapper" in class_name:
                         category_location = p_element.text.split(" · ")
                         article_dict["category"] = category_location[0]
+<<<<<<< HEAD
                         article_dict["location"] = category_location[1]
+=======
+                        article_dict["location"] = category_location[1] if len(category_location) > 1 else ""
+>>>>>>> 806a986... Blocket parser now kinda works
                     elif "Time" in class_name:
                         article_dict["time"] = p_element.text
 
