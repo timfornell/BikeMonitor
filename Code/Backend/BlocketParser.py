@@ -1,15 +1,4 @@
-from os import link
 from selenium import webdriver
-<<<<<<< HEAD
-import selenium
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-import bs4
-import pandas as pd
-import random
-import requests
-=======
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -21,7 +10,6 @@ import pandas as pd
 import random
 import requests
 import selenium
->>>>>>> 806a986... Blocket parser now kinda works
 import selenium.webdriver.support.ui as ui
 import time
 
@@ -65,10 +53,6 @@ class BlocketParser(WebsiteParser):
                     current_page += 1
                     query_url = query_url.replace(f"&page={current_page - 1}", f"&page={current_page}")
 
-                    sleep_time = random.random() * 10 + 5
-                    print(f"Parsing finished. Will wait for {sleep_time} before loading next page...")
-                    time.sleep(sleep_time)
-
         except requests.exceptions.HTTPError as e:
             pass
 
@@ -105,11 +89,7 @@ class BlocketParser(WebsiteParser):
                     if "TopInfoWrapper" in class_name:
                         category_location = p_element.text.split(" · ")
                         article_dict["category"] = category_location[0]
-<<<<<<< HEAD
-                        article_dict["location"] = category_location[1]
-=======
                         article_dict["location"] = category_location[1] if len(category_location) > 1 else ""
->>>>>>> 806a986... Blocket parser now kinda works
                     elif "Time" in class_name:
                         article_dict["time"] = p_element.text
 
