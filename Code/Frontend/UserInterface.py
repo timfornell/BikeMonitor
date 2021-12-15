@@ -9,8 +9,8 @@ class UserInterface():
         self.data_manager = DataManagement(Path.cwd() / "DataStorage")
         self.search_result = pd.DataFrame()
 
-    def request_data_query(self, website: str, search_query: dict) -> None:
-        self.data_manager.get_data_from_website(website, search_query)
+    def request_data_query(self, website: str, website_url: str, search_query: dict) -> None:
+        self.data_manager.get_data_from_website(website, website_url, search_query)
 
     def visualize_search_results() -> None:
         pass
